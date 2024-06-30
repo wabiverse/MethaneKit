@@ -23,6 +23,11 @@ MacOS application view implementation.
 
 #pragma once
 
+#ifdef __APPLE__
+#include <TargetConditionals.h>
+
+#if !TARGET_OS_IPHONE
+
 #import "AppEnvironment.hh"
 
 #import <Metal/Metal.h>
@@ -55,3 +60,7 @@ MacOS application view implementation.
                 unsyncRefreshInterval:(double) refresh_interval_sec;
 
 @end
+
+#endif // !TARGET_OS_IPHONE
+
+#endif // __APPLE__

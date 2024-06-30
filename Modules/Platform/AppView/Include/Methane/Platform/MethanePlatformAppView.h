@@ -16,51 +16,28 @@ limitations under the License.
 
 *******************************************************************************
 
-FILE: Methane/Platform/MacOS/AppEnvironment.h
-MacOS application environment.
+FILE: Methane/Platform/AppEnvironment.h
+Methane application environment.
 
 ******************************************************************************/
 
 #pragma once
 
-#ifdef __APPLE__
-#include <TargetConditionals.h>
+#if defined(_WIN32)
 
+#include "Windows/AppEnvironment.h"
+
+#elif defined(__APPLE__)
+
+#include "TargetConditionals.h"
 #if !TARGET_OS_IPHONE
-
-#ifdef __OBJC__
-
-#import <AppKit/AppKit.h>
-
-@class AppViewMetal;
-
-@protocol MetalAppViewDelegate<NSObject>
-
-@property (nonatomic, readonly, nullable) NSWindow* window;
-
-- (void)drawInView:(nonnull AppViewMetal *) view;
-- (void)appView: (nonnull AppViewMetal *) view drawableSizeWillChange: (CGSize)size;
-
-@end
-
-using NativeViewController = NSViewController<MetalAppViewDelegate>;
-
-#else // __OBJC__
-
-using NativeViewController = void;
-
+# include "MacOS/AppEnvironment.hh"
+#else
+# include "iOS/AppEnvironment.hh"
 #endif
 
-namespace Methane::Platform
-{
+#elif defined __linux__
 
-struct AppEnvironment
-{
-    NativeViewController* _Nonnull ns_app_delegate;
-};
+#include "Linux/AppEnvironment.h"
 
-} // namespace Methane::Platform
-
-#endif // !TARGET_OS_IPHONE
-
-#endif // __APPLE__
+#endif

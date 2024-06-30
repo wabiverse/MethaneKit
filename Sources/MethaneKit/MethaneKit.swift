@@ -34,8 +34,18 @@ import MethaneDataEvents
 import MethaneDataPrimitives
 import MethaneDataRangeSet
 import MethaneDataTypes
+import MethaneGraphicsRHIBase
+import MethaneGraphicsRHIInterface
 import MethaneGraphicsTypes
+#if canImport(Metal)
+  import MethaneGraphicsRHIMetal
+#elseif os(Linux)
+  import MethaneGraphicsRHIVulkan
+#elseif os(Windows)
+  import MethaneGraphicsRHIDirectX
+#endif
 import MethaneInstrumentation
+import MethanePlatformAppView
 import MethanePlatformUtils
 import MethanePrimitives
 

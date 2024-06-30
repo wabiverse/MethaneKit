@@ -23,6 +23,8 @@ Windows application environment.
 
 #pragma once
 
+#if defined(_WIN32)
+
 #include <Windows.h>
 
 namespace Methane::Platform
@@ -34,3 +36,5 @@ struct AppEnvironment
 };
 
 } // namespace Methane::Platform
+
+#endif // defined(_WIN32)

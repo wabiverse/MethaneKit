@@ -23,6 +23,8 @@ Linux application environment.
 
 #pragma once
 
+#ifdef __linux__
+
 #include <cstdint>
 
 struct xcb_connection_t;
@@ -54,3 +56,5 @@ struct AppEnvironment
 };
 
 } // namespace Methane::Platform
+
+#endif /* __linux__ */

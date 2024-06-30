@@ -23,6 +23,11 @@ iOS/tvOS application environment.
 
 #pragma once
 
+#ifdef __APPLE__
+#include <TargetConditionals.h>
+
+#if TARGET_OS_IPHONE
+
 #ifdef __OBJC__
 
 #import <UIKit/UIKit.h>
@@ -55,3 +60,7 @@ struct AppEnvironment
 };
 
 } // namespace Methane::Platform
+
+#endif // TARGET_OS_IPHONE
+
+#endif // __APPLE__

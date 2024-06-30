@@ -23,6 +23,11 @@ iOS/tvOS Metal rendering application view implementation.
 
 #pragma once
 
+#ifdef __APPLE__
+#include <TargetConditionals.h>
+
+#if TARGET_OS_IPHONE
+
 #import "AppEnvironment.hh"
 
 #import <Metal/Metal.h>
@@ -52,3 +57,7 @@ iOS/tvOS Metal rendering application view implementation.
                          vsyncEnabled:(BOOL) vsync_enabled;
 
 @end
+
+#endif // TARGET_OS_IPHONE
+
+#endif // __APPLE__
