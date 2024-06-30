@@ -67,7 +67,7 @@ static Rhi::IResource::Type GetResourceTypeByMetalArgumentType(MTLBindingType mt
     case MTLBindingTypeBuffer:  return Rhi::ResourceType::Buffer;
     case MTLBindingTypeTexture: return Rhi::ResourceType::Texture;
     case MTLBindingTypeSampler: return Rhi::ResourceType::Sampler;
-    default:                    META_UNEXPECTED_ARG_RETURN(mtl_arg_type, IResource::Type::Buffer);
+    default:                    META_UNEXPECTED_ARG_RETURN(mtl_arg_type, Rhi::IResource::Type::Buffer);
     }
 }
 

@@ -28,11 +28,13 @@ Metal application view creation by render context settings (shared logic with Vu
 #include <Methane/Graphics/RHI/IRenderContext.h>
 #include <Methane/Instrumentation.h>
 
-#ifdef APPLE_MACOS
+#include <TargetConditionals.h>
+
+#if !TARGET_OS_IPHONE
 #import <Methane/Platform/MacOS/AppViewMetal.hh>
 #else
 #import <Methane/Platform/iOS/AppViewMetal.hh>
-#endif
+#endif /* !TARGET_OS_IPHONE */
 
 #import <Methane/Platform/Apple/Types.hh>
 
@@ -47,7 +49,7 @@ inline AppViewMetal* CreateRenderContextAppView(const Platform::AppEnvironment& 
                                                      pixelFormat: TypeConverter::DataFormatToMetalPixelType(settings.color_format)
                                                    drawableCount: settings.frame_buffers_count
                                                     vsyncEnabled: MacOS::ConvertToNsBool(settings.vsync_enabled)
-#ifdef APPLE_MACOS
+#if !TARGET_OS_IPHONE
                                            unsyncRefreshInterval: 1.0 / settings.unsync_max_fps
 #endif
     ];
@@ -67,7 +69,7 @@ inline AppViewMetal* CreateTemporaryAppView(const Platform::AppEnvironment& env)
                                                      pixelFormat: MTLPixelFormatBGRA8Unorm
                                                    drawableCount: 3
                                                     vsyncEnabled: YES
-#ifdef APPLE_MACOS
+#if !TARGET_OS_IPHONE
                                            unsyncRefreshInterval: 0.01
 #endif
     ];

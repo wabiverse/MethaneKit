@@ -29,7 +29,7 @@ Font atlas textures generation and fonts library management classes.
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-#include <nowide/convert.hpp>
+#include <boost/nowide/convert.hpp>
 
 namespace Methane::UserInterface
 {

@@ -38,7 +38,7 @@ Vulkan base template implementation of the command list interface.
 #include <Methane/Checks.hpp>
 
 #include <vulkan/vulkan.hpp>
-#include <nowide/convert.hpp>
+#include <boost/nowide/convert.hpp>
 #include <fmt/format.h>
 #include <magic_enum.hpp>
 

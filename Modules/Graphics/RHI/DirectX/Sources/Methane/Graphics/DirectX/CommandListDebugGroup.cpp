@@ -25,7 +25,7 @@ DirectX 12 command list debug group implementation.
 
 #include <Methane/Instrumentation.h>
 
-#include <nowide/convert.hpp>
+#include <boost/nowide/convert.hpp>
 
 namespace Methane::Graphics::Rhi
 {

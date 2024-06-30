@@ -3,6 +3,13 @@ import PackageDescription
 
 let package = Package(
   name: "MethaneKit",
+  platforms: [
+    .macOS(.v14),
+    .visionOS(.v1),
+    .iOS(.v17),
+    .tvOS(.v17),
+    .watchOS(.v10)
+  ],
   products: [
     .library(
       name: "MethaneKit",
@@ -17,10 +24,32 @@ let package = Package(
         "MethaneDataProvider",
         "MethaneDataEvents",
         "MethaneDataAnimation",
+        // ----- graphics ---
+        "MethaneGraphicsTypes",
+        "MethaneGraphicsRHIInterface",
+        "MethaneGraphicsRHIBase",
+        "MethaneGraphicsRHIMetal",
+        "MethaneGraphicsRHIVulkan",
+        "MethaneGraphicsRHIDirectX",
         // ----- platform ---
+        "MethanePlatformAppView",
         "MethanePlatformUtils",
         // -------- swift ---
         "MethaneKit"
+      ]
+    ),
+
+    .library(
+      name: "taskflow",
+      targets: [
+        "taskflow"
+      ]
+    ),
+
+    .library(
+      name: "nowide",
+      targets: [
+        "nowide"
       ]
     ),
 
@@ -67,6 +96,14 @@ let package = Package(
     ),
 
     .target(
+      name: "taskflow"
+    ),
+
+    .target(
+      name: "nowide"
+    ),
+
+    .target(
       name: "HLSLpp",
       dependencies: [
         .target(name: "platforms")
@@ -94,6 +131,18 @@ let package = Package(
       path: "Modules/Common/Instrumentation",
       exclude: Arch.getExcludes(for: .instrumentation),
       publicHeadersPath: "Include"
+    ),
+
+    .target(
+      name: "MethanePlatformAppView",
+      dependencies: [
+        .target(name: "MethaneDataTypes"),
+        .target(name: "MethaneInstrumentation")
+      ],
+      path: "Modules/Platform/AppView",
+      exclude: Arch.getExcludes(for: .appView),
+      publicHeadersPath: "Include",
+      cxxSettings: Arch.getCxxSettings(for: .appView)
     ),
 
     .target(
@@ -172,6 +221,97 @@ let package = Package(
     ),
 
     .target(
+      name: "MethaneGraphicsTypes",
+      dependencies: [
+        .target(name: "MethaneDataTypes"),
+        .target(name: "MethaneInstrumentation"),
+      ],
+      path: "Modules/Graphics/Types",
+      publicHeadersPath: "Include"
+    ),
+
+    .target(
+      name: "MethaneGraphicsRHIInterface",
+      dependencies: [
+        .target(name: "MethanePrimitives"),
+        .target(name: "MethaneDataTypes"),
+        .target(name: "MethaneDataProvider"),
+        .target(name: "MethaneDataRangeSet"),
+        .target(name: "MethaneDataEvents"),
+        .target(name: "MethaneDataPrimitives"),
+        .target(name: "MethaneGraphicsTypes"),
+        .target(name: "MethaneInstrumentation"),
+        .target(name: "MethanePlatformAppView"),
+      ],
+      path: "Modules/Graphics/RHI/Interface",
+      publicHeadersPath: "Include"
+    ),
+
+    .target(
+      name: "MethaneGraphicsRHIBase",
+      dependencies: [
+        .target(name: "taskflow"),
+        .target(name: "nowide"),
+        .target(name: "MethaneDataTypes"),
+        .target(name: "MethaneDataPrimitives"),
+        .target(name: "MethaneInstrumentation"),
+        .target(name: "MethaneGraphicsRHIInterface"),
+      ],
+      path: "Modules/Graphics/RHI/Base",
+      publicHeadersPath: "Include"
+    ),
+
+    .target(
+      name: "MethaneGraphicsRHIMetal",
+      dependencies: [
+        .target(name: "MethaneDataTypes"),
+        .target(name: "MethaneDataPrimitives"),
+        .target(name: "MethanePlatformUtils"),
+        .target(name: "MethanePlatformAppView"),
+        .target(name: "MethaneInstrumentation"),
+        .target(name: "MethaneGraphicsRHIBase"),
+      ],
+      path: "Modules/Graphics/RHI/Metal",
+      publicHeadersPath: "Include",
+      linkerSettings: [
+        .linkedFramework("Foundation", .when(platforms: [.macOS, .iOS, .visionOS, .tvOS, .watchOS])),
+        .linkedFramework("QuartzCore", .when(platforms: [.macOS, .iOS, .visionOS, .tvOS, .watchOS])),
+        .linkedFramework("CoreVideo", .when(platforms: [.macOS, .iOS, .visionOS, .tvOS, .watchOS])),
+        .linkedFramework("Metal", .when(platforms: [.macOS, .iOS, .visionOS, .tvOS, .watchOS])),
+        .linkedFramework("AppKit", .when(platforms: [.macOS])),
+        .linkedFramework("UIKit", .when(platforms: [.iOS, .visionOS, .tvOS, .watchOS])),
+      ]
+    ),
+
+    .target(
+      name: "MethaneGraphicsRHIVulkan",
+      dependencies: [
+        .target(name: "MethaneDataTypes"),
+        .target(name: "MethaneDataPrimitives"),
+        .target(name: "MethanePlatformUtils"),
+        .target(name: "MethanePlatformAppView"),
+        .target(name: "MethaneInstrumentation"),
+        .target(name: "MethaneGraphicsRHIBase"),
+      ],
+      path: "Modules/Graphics/RHI/Vulkan",
+      publicHeadersPath: "Include"
+    ),
+
+    .target(
+      name: "MethaneGraphicsRHIDirectX",
+      dependencies: [
+        .target(name: "MethaneDataTypes"),
+        .target(name: "MethaneDataPrimitives"),
+        .target(name: "MethanePlatformUtils"),
+        .target(name: "MethanePlatformAppView"),
+        .target(name: "MethaneInstrumentation"),
+        .target(name: "MethaneGraphicsRHIBase"),
+      ],
+      path: "Modules/Graphics/RHI/DirectX",
+      publicHeadersPath: "Include"
+    ),
+
+    .target(
       name: "MethaneKit",
       dependencies: [
         .target(name: "Tracy"),
@@ -183,7 +323,14 @@ let package = Package(
         .target(name: "MethaneDataProvider"),
         .target(name: "MethaneDataEvents"),
         .target(name: "MethaneDataAnimation"),
+        .target(name: "MethaneGraphicsTypes"),
+        .target(name: "MethaneGraphicsRHIInterface"),
+        .target(name: "MethaneGraphicsRHIBase"),
+        .target(name: "MethaneGraphicsRHIMetal", condition: .when(platforms: [.macOS, .visionOS, .iOS, .tvOS, .watchOS])),
+        .target(name: "MethaneGraphicsRHIVulkan", condition: .when(platforms: [.linux])),
+        .target(name: "MethaneGraphicsRHIDirectX", condition: .when(platforms: [.windows])),
         .target(name: "MethanePlatformUtils"),
+        .target(name: "MethanePlatformAppView"),
       ],
       swiftSettings: [
         .interoperabilityMode(.Cxx)
@@ -278,6 +425,7 @@ enum Arch
     case instrumentation = "Instrumentation"
     case platform = "Platform"
     case provider = "Provider"
+    case appView = "AppView"
   }
 
   public static func getExcludes(for target: MethaneTarget) -> [String]
@@ -302,8 +450,57 @@ enum Arch
         }
       case .provider:
         break
+      case .appView:
+        for os in Arch.OS.allCases.filter({ !Arch.host.contains($0.rawValue.lowercased()) })
+        {
+          if Arch.host.contains(OS.apple.rawValue.lowercased())
+          {
+            if Arch.device.contains("macosx")
+            {
+              excludes.append("Include/Methane/Platform/iOS/AppEnvironment.hh")
+              excludes.append("Include/Methane/Platform/iOS/AppViewMetal.hh")
+              excludes.append("Sources/Methane/Platform/iOS/AppViewMetal.mm")
+            }
+            else
+            {
+              excludes.append("Include/Methane/Platform/MacOS/AppEnvironment.hh")
+              excludes.append("Include/Methane/Platform/MacOS/AppViewMetal.hh")
+              excludes.append("Sources/Methane/Platform/MacOS/AppViewMetal.mm")
+            }
+
+            excludes.append("Include/Methane/Platform/\(os.rawValue)/AppEnvironment.h")
+          }
+          else
+          {
+            excludes.append("Sources/Methane/Platform/MacOS/AppViewMetal.mm")
+            excludes.append("Include/Methane/Platform/MacOS/AppEnvironment.hh")
+            excludes.append("Include/Methane/Platform/MacOS/AppViewMetal.hh")
+
+            excludes.append("Sources/Methane/Platform/iOS/AppViewMetal.mm")
+            excludes.append("Include/Methane/Platform/iOS/AppEnvironment.hh")
+            excludes.append("Include/Methane/Platform/iOS/AppViewMetal.hh")
+          }
+        }
     }
 
     return excludes
+  }
+
+  public static func getCxxSettings(for target: MethaneTarget) -> [CXXSetting]
+  {
+    var settings = [CXXSetting]()
+
+    switch target
+    {
+      case .appView:
+        if Arch.device.contains("macosx")
+        {
+          settings.append(.define("APPLE_MACOS", to: "1"))
+        }
+      default:
+        break
+    }
+
+    return settings
   }
 }

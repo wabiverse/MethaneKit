@@ -26,7 +26,8 @@ and by Methane App implementations.
 
 #ifdef __OBJC__
 
-#ifdef APPLE_MACOS
+#include "TargetConditionals.h"
+#if !TARGET_OS_IPHONE
 #import "MacOS/AppViewMetal.hh"
 #else
 #import "iOS/AppViewMetal.hh"

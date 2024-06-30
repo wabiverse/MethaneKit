@@ -27,7 +27,7 @@ list(APPEND PRECOMPILED_HEADERS
 
     # Common External headers
     <fmt/format.h>
-    <nowide/convert.hpp>
+    <boost/nowide/convert.hpp>
 
     # types
     <limits>

@@ -24,7 +24,7 @@ Windows implementation of the platform specific instrumentation functions.
 #include <Windows.h>
 
 #include <string_view>
-#include <nowide/convert.hpp>
+#include <boost/nowide/convert.hpp>
 
 namespace Methane
 {

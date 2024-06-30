@@ -30,7 +30,7 @@ DirectX 12 fence implementation.
 #include <Methane/Instrumentation.h>
 #include <Methane/Graphics/DirectX/ErrorHandling.h>
 
-#include <nowide/convert.hpp>
+#include <boost/nowide/convert.hpp>
 
 namespace Methane::Graphics::DirectX
 {

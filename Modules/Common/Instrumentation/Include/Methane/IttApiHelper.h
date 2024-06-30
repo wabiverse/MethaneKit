@@ -36,7 +36,7 @@ Helper macro-definitions for ITT instrumentation
 #include <stdint.h>
 
 #if ITT_PLATFORM==ITT_PLATFORM_WIN
-#include <nowide/convert.hpp>
+#include <boost/nowide/convert.hpp>
 #endif
 
 #ifdef _WIN32

@@ -35,7 +35,7 @@ DirectX 12 implementation of the shader interface.
 
 #include <d3dcompiler.h>
 
-#include <nowide/convert.hpp>
+#include <boost/nowide/convert.hpp>
 #include <fmt/format.h>
 #include <sstream>
 #include <set>

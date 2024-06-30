@@ -30,7 +30,7 @@ Windows application implementation.
 
 #include <ShellScalingApi.h>
 #include <windowsx.h>
-#include <nowide/convert.hpp>
+#include <boost/nowide/convert.hpp>
 
 namespace Methane::Platform
 {

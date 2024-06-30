@@ -28,7 +28,7 @@ Windows platform utility functions.
 #include <Windows.h>
 #include <shellapi.h>
 
-#include <nowide/convert.hpp>
+#include <boost/nowide/convert.hpp>
 #include <string_view>
 #include <array>
 

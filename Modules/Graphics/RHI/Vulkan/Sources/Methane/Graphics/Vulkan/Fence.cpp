@@ -30,7 +30,7 @@ Vulkan fence implementation.
 #include <Methane/Graphics/Base/Context.h>
 #include <Methane/Instrumentation.h>
 
-#include <nowide/convert.hpp>
+#include <boost/nowide/convert.hpp>
 
 namespace Methane::Graphics::Vulkan
 {

@@ -33,7 +33,7 @@ DirectX 12 implementation of the render context interface.
 #include <Methane/Instrumentation.h>
 #include <Methane/Checks.hpp>
 
-#include <nowide/convert.hpp>
+#include <boost/nowide/convert.hpp>
 
 namespace Methane::Graphics::DirectX
 {

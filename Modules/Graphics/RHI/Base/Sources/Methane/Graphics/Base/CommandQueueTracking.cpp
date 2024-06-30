@@ -32,7 +32,7 @@ Base implementation of the command queue with execution tracking.
 #include <Methane/Instrumentation.h>
 #include <Methane/Checks.hpp>
 
-#include <nowide/convert.hpp>
+#include <boost/nowide/convert.hpp>
 #include <stdexcept>
 #include <cassert>
 

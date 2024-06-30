@@ -37,7 +37,7 @@ DirectX 12 implementation of the render state interface.
 #include <Methane/Instrumentation.h>
 #include <Methane/Checks.hpp>
 
-#include <nowide/convert.hpp>
+#include <boost/nowide/convert.hpp>
 #include <directx/d3dx12_core.h>
 #include <d3dcompiler.h>
 

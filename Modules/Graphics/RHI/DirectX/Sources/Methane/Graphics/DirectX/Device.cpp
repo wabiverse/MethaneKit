@@ -38,7 +38,7 @@ DirectX 12 implementation of the device interface.
 // #define BREAK_ON_DIRECTX_DEBUG_LAYER_MESSAGE_ENABLED
 #endif
 
-#include <nowide/convert.hpp>
+#include <boost/nowide/convert.hpp>
 #include <array>
 #include <algorithm>
 #include <cassert>

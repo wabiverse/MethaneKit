@@ -36,7 +36,7 @@ DirectX 12 implementation of the command queue interface.
 #include <Methane/Instrumentation.h>
 #include <Methane/Checks.hpp>
 
-#include <nowide/convert.hpp>
+#include <boost/nowide/convert.hpp>
 #include <magic_enum.hpp>
 #include <stdexcept>
 #include <cassert>

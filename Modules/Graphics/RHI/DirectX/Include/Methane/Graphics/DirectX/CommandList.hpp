@@ -40,7 +40,7 @@ DirectX 12 base template implementation of the command list interface.
 #include <wrl.h>
 #include <directx/d3d12.h>
 #include <pix.h>
-#include <nowide/convert.hpp>
+#include <boost/nowide/convert.hpp>
 #include <fmt/format.h>
 
 #ifdef METHANE_LOGGING_ENABLED

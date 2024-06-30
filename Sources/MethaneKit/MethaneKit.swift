@@ -31,9 +31,12 @@
 import Foundation
 import MethaneDataAnimation
 import MethaneDataEvents
+import MethaneDataPrimitives
 import MethaneDataRangeSet
 import MethaneDataTypes
+import MethaneGraphicsTypes
 import MethaneInstrumentation
+import MethanePlatformUtils
 import MethanePrimitives
 
 public enum MethaneKit
