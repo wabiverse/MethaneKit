@@ -23,7 +23,7 @@ FILE: Methane/Data/Primitives.cpp
 namespace Methane::Data::Primitives
 {
 
-void Dummy()
+void DataPrimitivesDummy()
 {
     // Prevents libtool warning for library: 
     // the table of contents is empty (no object file members in the library define global symbols)

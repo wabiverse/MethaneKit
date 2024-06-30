@@ -23,7 +23,7 @@ FILE: Methane/Data/Types.cpp
 namespace Methane::Data::Types
 {
 
-void Dummy()
+void TypesDummy()
 {
     // Prevents libtool warning for library: 
     // the table of contents is empty (no object file members in the library define global symbols)

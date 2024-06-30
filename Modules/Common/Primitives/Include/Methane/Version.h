@@ -36,11 +36,11 @@ Methane version macro definitions
 #endif
 
 #ifndef METHANE_VERSION_MINOR
-#define METHANE_VERSION_MINOR 0
+#define METHANE_VERSION_MINOR 7
 #endif
 
 #ifndef METHANE_VERSION_PATCH
-#define METHANE_VERSION_PATCH 0
+#define METHANE_VERSION_PATCH 3
 #endif
 
 #ifndef METHANE_VERSION_BUILD

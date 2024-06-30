@@ -24,7 +24,7 @@ Methane Common dummy function.
 namespace Methane::Primitives
 {
 
-void Dummy()
+void PrimitivesDummy()
 {
     // Prevents libtool warning for library: 
     // the table of contents is empty (no object file members in the library define global symbols)

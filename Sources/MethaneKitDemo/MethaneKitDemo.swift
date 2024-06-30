@@ -29,16 +29,13 @@
  * ---------------------------------------------------------------- */
 
 import Foundation
-import MethaneDataAnimation
-import MethaneDataEvents
-import MethaneDataRangeSet
-import MethaneDataTypes
-import MethaneInstrumentation
-import MethanePrimitives
+import MethaneKit
 
-public enum MethaneKit
+@main
+enum MethaneKitDemo
 {
-  /**
-   * The current version of the methanekit swift package. */
-  public static let version = "\(METHANE_VERSION_MAJOR).\(METHANE_VERSION_MINOR).\(METHANE_VERSION_PATCH)"
+  public static func main()
+  {
+    print("methanekit version: \(MethaneKit.version)")
+  }
 }

@@ -7,10 +7,19 @@ let package = Package(
     .library(
       name: "MethaneKit",
       targets: [
+        // ------- common ---
         "MethanePrimitives",
         "MethaneInstrumentation",
+        // --------- data ---
+        "MethaneDataPrimitives",
         "MethaneDataRangeSet",
         "MethaneDataTypes",
+        "MethaneDataProvider",
+        "MethaneDataEvents",
+        "MethaneDataAnimation",
+        // ----- platform ---
+        "MethanePlatformUtils",
+        // -------- swift ---
         "MethaneKit"
       ]
     ),
@@ -44,9 +53,13 @@ let package = Package(
     .target(
       name: "Tracy",
       exclude: [
-        "libbacktrace"
+        "libbacktrace",
+        "TracyClient.cpp"
       ],
-      publicHeadersPath: "include"
+      publicHeadersPath: "include",
+      cxxSettings: [
+        .define("TRACY_NO_CALLSTACK", to: "1")
+      ]
     ),
 
     .target(
@@ -84,6 +97,58 @@ let package = Package(
     ),
 
     .target(
+      name: "MethanePlatformUtils",
+      dependencies: [
+        .target(name: "MethaneDataTypes"),
+        .target(name: "MethaneInstrumentation")
+      ],
+      path: "Modules/Platform/Utils",
+      exclude: Arch.getExcludes(for: .platform),
+      publicHeadersPath: "Include"
+    ),
+
+    .target(
+      name: "MethaneDataPrimitives",
+      dependencies: [
+        .target(name: "MethaneDataTypes"),
+        .target(name: "MethaneInstrumentation"),
+      ],
+      path: "Modules/Data/Primitives",
+      publicHeadersPath: "Include"
+    ),
+
+    .target(
+      name: "MethaneDataAnimation",
+      dependencies: [
+        .target(name: "MethanePrimitives"),
+        .target(name: "MethaneInstrumentation")
+      ],
+      path: "Modules/Data/Animation",
+      publicHeadersPath: "Include"
+    ),
+
+    .target(
+      name: "MethaneDataEvents",
+      dependencies: [
+        .target(name: "MethanePrimitives"),
+        .target(name: "MethaneInstrumentation")
+      ],
+      path: "Modules/Data/Events",
+      publicHeadersPath: "Include"
+    ),
+
+    .target(
+      name: "MethaneDataProvider",
+      dependencies: [
+        .target(name: "MethaneDataTypes"),
+        .target(name: "MethaneInstrumentation"),
+        .target(name: "MethanePlatformUtils")
+      ],
+      path: "Modules/Data/Provider",
+      publicHeadersPath: "Include"
+    ),
+
+    .target(
       name: "MethaneDataRangeSet",
       dependencies: [
         .target(name: "MethanePrimitives"),
@@ -109,7 +174,26 @@ let package = Package(
     .target(
       name: "MethaneKit",
       dependencies: [
-        .target(name: "MethaneDataTypes")
+        .target(name: "Tracy"),
+        .target(name: "MethanePrimitives"),
+        .target(name: "MethaneInstrumentation"),
+        .target(name: "MethaneDataPrimitives"),
+        .target(name: "MethaneDataRangeSet"),
+        .target(name: "MethaneDataTypes"),
+        .target(name: "MethaneDataProvider"),
+        .target(name: "MethaneDataEvents"),
+        .target(name: "MethaneDataAnimation"),
+        .target(name: "MethanePlatformUtils"),
+      ],
+      swiftSettings: [
+        .interoperabilityMode(.Cxx)
+      ]
+    ),
+
+    .executableTarget(
+      name: "MethaneKitDemo",
+      dependencies: [
+        .target(name: "MethaneKit"),
       ],
       swiftSettings: [
         .interoperabilityMode(.Cxx)
@@ -192,6 +276,8 @@ enum Arch
   enum MethaneTarget: String
   {
     case instrumentation = "Instrumentation"
+    case platform = "Platform"
+    case provider = "Provider"
   }
 
   public static func getExcludes(for target: MethaneTarget) -> [String]
@@ -201,11 +287,21 @@ enum Arch
     switch target
     {
       case .instrumentation:
-        Arch.OS.allCases.filter({ !Arch.host.contains($0.rawValue.lowercased()) }).forEach { os in
-          !Arch.host.contains(OS.apple.rawValue)
+        for os in Arch.OS.allCases.filter({ !Arch.host.contains($0.rawValue.lowercased()) })
+        {
+          Arch.host.contains(OS.apple.rawValue.lowercased())
             ? excludes.append("Sources/Methane/\(os.rawValue)/Instrumentation.cpp")
-            : excludes.append("Sources/Methane/\(os.rawValue)/Instrumentation.mm") 
+            : excludes.append("Sources/Methane/\(os.rawValue)/Instrumentation.mm")
         }
+      case .platform:
+        for os in Arch.OS.allCases.filter({ !Arch.host.contains($0.rawValue.lowercased()) })
+        {
+          Arch.host.contains(OS.apple.rawValue.lowercased())
+            ? excludes.append("Sources/Methane/Platform/\(os.rawValue)/Utils.cpp")
+            : excludes.append("Sources/Methane/Platform/\(os.rawValue)/Utils.mm")
+        }
+      case .provider:
+        break
     }
 
     return excludes

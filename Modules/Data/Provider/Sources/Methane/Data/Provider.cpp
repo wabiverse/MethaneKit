@@ -23,7 +23,7 @@ FILE: Methane/Data/IProvider.cpp
 namespace Methane::Data::IProvider
 {
 
-void Dummy()
+void ProviderDummy()
 {
     // Prevents libtool warning for library: 
     // the table of contents is empty (no object file members in the library define global symbols)
